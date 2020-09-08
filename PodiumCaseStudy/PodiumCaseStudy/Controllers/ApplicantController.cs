@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using PodiumCaseStudy.Data.Entities;
+using PodiumCaseStudy.Services;
 
 namespace PodiumCaseStudy.Controllers
 {
@@ -18,29 +19,24 @@ namespace PodiumCaseStudy.Controllers
         };
 
         private readonly ILogger<ApplicantController> _logger;
+        private readonly IApplicantService _applicantService;
 
-        public ApplicantController(ILogger<ApplicantController> logger)
+        public ApplicantController(ILogger<ApplicantController> logger, IApplicantService applicatService)
         {
             _logger = logger;
+            _applicantService = applicatService;
         }
 
         [HttpGet]
         public Applicant Get(string id)
         {
-            return new Applicant
-            {
-                Id = id,
-                FirstName = "Paul",
-                LastName = "Cubitt",
-                Email = "paul.cubitt@testdata.com",
-                DateOfBirth = new DateTime(1973, 12, 28)
-            };
+            return _applicantService.GetById(id);
         }
 
         [HttpPost]
         public Applicant Post(Applicant applicant)
         {
-            return applicant;
+            return _applicantService.CreateApplicant(applicant);
         }
     }
 }
