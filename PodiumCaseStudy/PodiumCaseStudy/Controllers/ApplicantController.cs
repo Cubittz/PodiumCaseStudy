@@ -15,11 +15,6 @@ namespace PodiumCaseStudy.Controllers
     [Route("[controller]")]
     public class ApplicantController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
         private readonly ILogger<ApplicantController> _logger;
         private readonly IApplicantService _applicantService;
         private readonly IMapper _mapper;

@@ -9,6 +9,8 @@ namespace PodiumCaseStudy.Data
         public MappingProfile()
         {
             CreateMap<Applicant, ApplicantDto>().ReverseMap();
+            CreateMap<Product, ProductDto>().ReverseMap();
+
         }
     }
 }

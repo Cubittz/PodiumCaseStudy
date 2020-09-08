@@ -30,6 +30,7 @@ namespace PodiumCaseStudy
         {
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IApplicantRepository, ApplicantRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
             services.AddTransient<IApplicantService, ApplicantService>();
 
             services.AddAutoMapper(typeof(Startup));
