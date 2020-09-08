@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PodiumCaseStudy.Data.Dtos;
 using PodiumCaseStudy.Data.Entities;
 using PodiumCaseStudy.Services;
 
@@ -20,23 +22,31 @@ namespace PodiumCaseStudy.Controllers
 
         private readonly ILogger<ApplicantController> _logger;
         private readonly IApplicantService _applicantService;
+        private readonly IMapper _mapper;
 
-        public ApplicantController(ILogger<ApplicantController> logger, IApplicantService applicatService)
+
+        public ApplicantController(ILogger<ApplicantController> logger, 
+            IApplicantService applicantService,
+            IMapper mapper)
         {
             _logger = logger;
-            _applicantService = applicatService;
+            _mapper = mapper;
+            _applicantService = applicantService;
         }
 
         [HttpGet]
-        public Applicant Get(string id)
+        public async Task<ApplicantDto> Get(string id)
         {
-            return _applicantService.GetById(id);
+            var applicant = await _applicantService.GetById(id);
+            var applicantDto = _mapper.Map<ApplicantDto>(applicant);
+            return applicantDto;
         }
 
         [HttpPost]
-        public Applicant Post(Applicant applicant)
+        public async Task<Applicant> Post(ApplicantDto applicantDto)
         {
-            return _applicantService.CreateApplicant(applicant);
+            var applicant = _mapper.Map<Applicant>(applicantDto);
+            return await _applicantService.CreateApplicant(applicant);
         }
     }
 }

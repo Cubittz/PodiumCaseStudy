@@ -9,8 +9,8 @@ namespace PodiumCaseStudy.Services
 {
     public interface IApplicantService
     {
-        Applicant GetById(string id);
+        Task<Applicant> GetById(string id);
 
-        Applicant CreateApplicant(Applicant applicant);
+        Task<Applicant> CreateApplicant(Applicant applicant);
     }
 }

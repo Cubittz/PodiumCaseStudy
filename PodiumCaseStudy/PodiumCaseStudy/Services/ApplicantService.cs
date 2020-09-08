@@ -1,29 +1,27 @@
 ﻿using PodiumCaseStudy.Data.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using PodiumCaseStudy.Data.Repositories;
 using System.Threading.Tasks;
 
 namespace PodiumCaseStudy.Services
 {
     public class ApplicantService  : IApplicantService
     {
-        public Applicant GetById(string id)
+        private readonly IApplicantRepository _repository;
+        public ApplicantService(IApplicantRepository repository)
         {
-            var applicant = new Applicant
-            {
-                Id = id,
-                FirstName = "Paul",
-                LastName = "Cubitt",
-                Email = "paul.cubitt@testdata.com",
-                DateOfBirth = new DateTime(1973, 12, 28)
-            };
+            _repository = repository;
+        }
+
+        public async Task<Applicant> GetById(string id)
+        {
+            var applicant = await _repository.GetByIdAsync(id);
             return applicant;
         }
-        public Applicant CreateApplicant(Applicant applicant)
+
+        public async Task<Applicant> CreateApplicant(Applicant applicant)
         {
-            return applicant;
+            var newApplicant = await _repository.CreateAsync(applicant);
+            return newApplicant;
         }
     }
 }

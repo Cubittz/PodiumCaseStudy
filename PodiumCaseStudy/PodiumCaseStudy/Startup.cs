@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using PodiumCaseStudy.Data;
+using PodiumCaseStudy.Data.Repositories;
 using PodiumCaseStudy.Services;
 
 namespace PodiumCaseStudy
@@ -27,7 +28,13 @@ namespace PodiumCaseStudy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IApplicantService, ApplicantService>();
+            services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddTransient<IApplicantRepository, ApplicantRepository>();
+            services.AddTransient<IApplicantService, ApplicantService>();
+
+            services.AddAutoMapper(typeof(Startup));
+
+
             services.AddDbContext<PodiumDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers();
