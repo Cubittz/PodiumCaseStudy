@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29905.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PodiumCaseStudy", "PodiumCaseStudy\PodiumCaseStudy.csproj", "{82084D44-ADF8-4092-939D-223853F31EB8}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ClientApp(1)", "ClientApp\", "{51B0FABF-D357-4332-ACDB-18E54CB8365A}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ClientApp", "ClientApp\", "{51B0FABF-D357-4332-ACDB-18E54CB8365A}"
 	ProjectSection(WebsiteProperties) = preProject
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_61455"
@@ -23,6 +23,7 @@ Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ClientApp(1)", "ClientApp\"
 		Release.AspNetCompiler.FixedNames = "false"
 		Release.AspNetCompiler.Debug = "False"
 		VWDPort = "61455"
+		SlnRelativePath = "ClientApp\"
 	EndProjectSection
 EndProject
 Global
