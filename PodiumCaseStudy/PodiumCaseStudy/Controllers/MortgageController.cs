@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using PodiumCaseStudy.Data.Dtos;
+using PodiumCaseStudy.Data.Entities;
+using PodiumCaseStudy.Services;
 
 namespace PodiumCaseStudy.Controllers
 {
@@ -12,11 +16,23 @@ namespace PodiumCaseStudy.Controllers
     public class MortgageController : ControllerBase
     {
         private readonly ILogger<MortgageController> _logger;
+        private readonly IMortgageService _mortgageService;
+        private readonly IMapper _mapper;
 
-        public MortgageController(ILogger<MortgageController> logger)
+        public MortgageController(ILogger<MortgageController> logger,
+            IMortgageService mortgageService,
+            IMapper mapper)
         {
             _logger = logger;
+            _mortgageService = mortgageService;
+            _mapper = mapper;
         }
 
+        [HttpPost]
+        public async Task<MortgageProposal> Post(MortgageRequirementDto requirementDto)
+        {
+            var requirement = _mapper.Map<MortgageRequirement>(requirementDto);
+            return await _mortgageService.CreateProposal(requirement);
+        }
     }
 }
