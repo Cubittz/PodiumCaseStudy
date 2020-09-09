@@ -10,6 +10,8 @@ namespace PodiumCaseStudy.Data
         {
             CreateMap<Applicant, ApplicantDto>().ReverseMap();
             CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<MortgageRequirement, MortgageRequirementDto>().ReverseMap();
+            CreateMap<MortgageProposal, MortgageProposalDto>().ReverseMap();
 
         }
     }

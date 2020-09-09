@@ -21,9 +21,9 @@ namespace PodiumCaseStudy.Migrations
 
             modelBuilder.Entity("PodiumCaseStudy.Data.Entities.Applicant", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("DateOfBirth")
                         .HasColumnType("datetime2");
@@ -40,6 +40,94 @@ namespace PodiumCaseStudy.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Applicants");
+                });
+
+            modelBuilder.Entity("PodiumCaseStudy.Data.Entities.MortgageProposal", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ApplicantId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MortgageRequirementId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ApplicantId");
+
+                    b.HasIndex("MortgageRequirementId");
+
+                    b.ToTable("MortgageProposals");
+                });
+
+            modelBuilder.Entity("PodiumCaseStudy.Data.Entities.MortgageRequirement", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("DepositAmount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PropertyValue")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MortgageRequirements");
+                });
+
+            modelBuilder.Entity("PodiumCaseStudy.Data.Entities.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("InterestRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Lender")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("LoanToValue")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("LoanType")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("MortgageProposalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MortgageProposalId");
+
+                    b.ToTable("Products");
+                });
+
+            modelBuilder.Entity("PodiumCaseStudy.Data.Entities.MortgageProposal", b =>
+                {
+                    b.HasOne("PodiumCaseStudy.Data.Entities.Applicant", "Applicant")
+                        .WithMany()
+                        .HasForeignKey("ApplicantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PodiumCaseStudy.Data.Entities.MortgageRequirement", "MortgageRequirement")
+                        .WithMany()
+                        .HasForeignKey("MortgageRequirementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PodiumCaseStudy.Data.Entities.Product", b =>
+                {
+                    b.HasOne("PodiumCaseStudy.Data.Entities.MortgageProposal", null)
+                        .WithMany("Products")
+                        .HasForeignKey("MortgageProposalId");
                 });
 #pragma warning restore 612, 618
         }

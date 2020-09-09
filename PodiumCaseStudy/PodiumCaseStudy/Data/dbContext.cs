@@ -15,5 +15,8 @@ namespace PodiumCaseStudy.Data
         }
 
         public DbSet<Applicant> Applicants { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<MortgageRequirement> MortgageRequirements { get; set; }
+        public DbSet<MortgageProposal> MortgageProposals { get; set; }
     }
 }
