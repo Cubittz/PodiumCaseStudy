@@ -29,10 +29,13 @@ namespace PodiumCaseStudy.Controllers
         }
 
         [HttpPost]
-        public async Task<MortgageProposal> Post(MortgageRequirementDto requirementDto)
+        public async Task<ActionResult<MortgageProposal>> PostMortgageProposal(MortgageRequirementDto requirementDto)
         {
             var requirement = _mapper.Map<MortgageRequirement>(requirementDto);
-            return await _mortgageService.CreateProposal(requirement);
+            var proposal = await _mortgageService.CreateProposal(requirement);
+            var proposalDto = _mapper.Map<MortgageProposalDto>(proposal);
+
+            return CreatedAtAction("PostMortgageProposal", new { id = proposal.Id }, proposalDto);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using PodiumCaseStudy.Data.Entities;
 using PodiumCaseStudy.Data.Repositories;
+using System;
 using System.Threading.Tasks;
 
 namespace PodiumCaseStudy.Services
@@ -12,7 +13,7 @@ namespace PodiumCaseStudy.Services
             _repository = repository;
         }
 
-        public async Task<Applicant> GetById(string id)
+        public async Task<Applicant> GetById(Guid id)
         {
             var applicant = await _repository.GetByIdAsync(id);
             return applicant;

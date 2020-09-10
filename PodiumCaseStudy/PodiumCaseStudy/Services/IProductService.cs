@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace PodiumCaseStudy.Services
 {
-    public interface IMortgageService
+    public interface IProductService
     {
-        Task<MortgageProposal> GetById(Guid id);
-
-        Task<MortgageProposal> CreateProposal(MortgageRequirement requirement);
+        Task<IEnumerable<Product>> GetAll();
     }
 }

@@ -30,7 +30,7 @@ namespace PodiumCaseStudy.Controllers
         }
 
         [HttpGet]
-        public async Task<ApplicantDto> Get(string id)
+        public async Task<ApplicantDto> GetApplicant(Guid id)
         {
             var applicant = await _applicantService.GetById(id);
             var applicantDto = _mapper.Map<ApplicantDto>(applicant);
@@ -38,10 +38,12 @@ namespace PodiumCaseStudy.Controllers
         }
 
         [HttpPost]
-        public async Task<Applicant> Post(ApplicantDto applicantDto)
+        public async Task<ActionResult<Applicant>> PostApplicant(ApplicantDto applicantDto)
         {
             var applicant = _mapper.Map<Applicant>(applicantDto);
-            return await _applicantService.CreateApplicant(applicant);
+            await _applicantService.CreateApplicant(applicant);
+
+            return CreatedAtAction("PostApplicant", new { id = applicant.Id }, applicant);
         }
     }
 }

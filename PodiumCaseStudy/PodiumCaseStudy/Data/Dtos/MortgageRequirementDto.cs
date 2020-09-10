@@ -9,6 +9,7 @@ namespace PodiumCaseStudy.Data.Dtos
     public class MortgageRequirementDto
     {
         public string Id { get; set; }
+        public string ApplicantId { get; set; }
         public int PropertyValue { get; set; }
         public int DepositAmount { get; set; }
     }

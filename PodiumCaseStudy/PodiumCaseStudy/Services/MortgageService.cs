@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http.Connections;
 using PodiumCaseStudy.Data.Entities;
 using PodiumCaseStudy.Data.Repositories;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace PodiumCaseStudy.Services
@@ -8,13 +10,16 @@ namespace PodiumCaseStudy.Services
     public class MortgageService  : IMortgageService
     {
         private readonly IMortgageProposalRepository _repository;
+        private readonly IProductService _productService;
 
-        public MortgageService(IMortgageProposalRepository repository)
+        public MortgageService(IMortgageProposalRepository repository,
+            IProductService productService)
         {
             _repository = repository;
+            _productService = productService;
         }
 
-        public async Task<MortgageProposal> GetById(string id)
+        public async Task<MortgageProposal> GetById(Guid id)
         {
             var proposal = await _repository.GetByIdAsync(id);
             return proposal;
@@ -29,7 +34,13 @@ namespace PodiumCaseStudy.Services
 
         private async Task<MortgageProposal> ProposalCalculator(MortgageRequirement requirement)
         {
-            return new MortgageProposal { };
+            var products = await _productService.GetAll();
+            return new MortgageProposal {
+                Id = new System.Guid(),
+                MortgageRequirement = requirement,
+                MortgageRequirementId = requirement.Id,
+                Products = products
+            };
         }
     }
 }

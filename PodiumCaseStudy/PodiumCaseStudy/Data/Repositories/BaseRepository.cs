@@ -18,7 +18,12 @@ namespace PodiumCaseStudy.Data.Repositories
             _dbSet = _dbContext.Set<T>();
         }
 
-        public async Task<T> GetByIdAsync(string id)
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await _dbSet.AsNoTracking().ToListAsync();
+        }
+
+        public async Task<T> GetByIdAsync(Guid id)
         {
             return await _dbSet.FindAsync(id);
         }

@@ -34,6 +34,8 @@ namespace PodiumCaseStudy
             services.AddTransient<IMortgageRequirementRepository, MortgageRequirementRepository>();
             services.AddTransient<IMortgageProposalRepository, MortgageProposalRepository>();
             services.AddTransient<IApplicantService, ApplicantService>();
+            services.AddTransient<IProductService, ProductService>();
+            services.AddTransient<IMortgageService, MortgageService>();
 
             services.AddAutoMapper(typeof(Startup));
 

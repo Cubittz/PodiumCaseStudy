@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PodiumCaseStudy.Data;
 
 namespace PodiumCaseStudy.Migrations
 {
     [DbContext(typeof(PodiumDbContext))]
-    partial class PodiumDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200909203354_RemoveApplicantIdFromRequirement")]
+    partial class RemoveApplicantIdFromRequirement
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -106,32 +108,6 @@ namespace PodiumCaseStudy.Migrations
                     b.HasIndex("MortgageProposalId");
 
                     b.ToTable("Products");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("ac9d10eb-639c-44a7-b8e0-94c799824b63"),
-                            InterestRate = 0.02m,
-                            Lender = "Bank A",
-                            LoanToValue = 0.6m,
-                            LoanType = 1
-                        },
-                        new
-                        {
-                            Id = new Guid("e3306135-c662-483a-884b-e6123ecf4697"),
-                            InterestRate = 0.03m,
-                            Lender = "Bank B",
-                            LoanToValue = 0.6m,
-                            LoanType = 0
-                        },
-                        new
-                        {
-                            Id = new Guid("4ebd1d33-7215-44d0-9f1b-a8f45f13c882"),
-                            InterestRate = 0.04m,
-                            Lender = "Bank C",
-                            LoanToValue = 0.9m,
-                            LoanType = 1
-                        });
                 });
 
             modelBuilder.Entity("PodiumCaseStudy.Data.Entities.MortgageProposal", b =>
