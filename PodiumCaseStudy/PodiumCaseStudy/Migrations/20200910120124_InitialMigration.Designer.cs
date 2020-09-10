@@ -10,7 +10,7 @@ using PodiumCaseStudy.Data;
 namespace PodiumCaseStudy.Migrations
 {
     [DbContext(typeof(PodiumDbContext))]
-    [Migration("20200909101911_InitialMigration")]
+    [Migration("20200910120124_InitialMigration")]
     partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -50,25 +50,44 @@ namespace PodiumCaseStudy.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ApplicantId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("MortgageRequirementId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ApplicantId");
 
                     b.HasIndex("MortgageRequirementId");
 
                     b.ToTable("MortgageProposals");
                 });
 
+            modelBuilder.Entity("PodiumCaseStudy.Data.Entities.MortgageProposalProduct", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MortgageProposalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MortgageProposalId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("MortgageProposalProduct");
+                });
+
             modelBuilder.Entity("PodiumCaseStudy.Data.Entities.MortgageRequirement", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ApplicantId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("DepositAmount")
@@ -78,6 +97,8 @@ namespace PodiumCaseStudy.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ApplicantId");
 
                     b.ToTable("MortgageRequirements");
                 });
@@ -100,24 +121,39 @@ namespace PodiumCaseStudy.Migrations
                     b.Property<int>("LoanType")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("MortgageProposalId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("MortgageProposalId");
-
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("6210c659-2bba-40c5-a1ab-3ebdbdbfad1b"),
+                            InterestRate = 0.02m,
+                            Lender = "Bank A",
+                            LoanToValue = 0.6m,
+                            LoanType = 1
+                        },
+                        new
+                        {
+                            Id = new Guid("fb57f274-7fa7-45b0-a5c1-1b5757195664"),
+                            InterestRate = 0.03m,
+                            Lender = "Bank B",
+                            LoanToValue = 0.6m,
+                            LoanType = 0
+                        },
+                        new
+                        {
+                            Id = new Guid("9bf06b0f-b937-4c4b-81c4-d00475af4b0d"),
+                            InterestRate = 0.04m,
+                            Lender = "Bank C",
+                            LoanToValue = 0.9m,
+                            LoanType = 1
+                        });
                 });
 
             modelBuilder.Entity("PodiumCaseStudy.Data.Entities.MortgageProposal", b =>
                 {
-                    b.HasOne("PodiumCaseStudy.Data.Entities.Applicant", "Applicant")
-                        .WithMany()
-                        .HasForeignKey("ApplicantId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PodiumCaseStudy.Data.Entities.MortgageRequirement", "MortgageRequirement")
                         .WithMany()
                         .HasForeignKey("MortgageRequirementId")
@@ -125,11 +161,28 @@ namespace PodiumCaseStudy.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("PodiumCaseStudy.Data.Entities.Product", b =>
+            modelBuilder.Entity("PodiumCaseStudy.Data.Entities.MortgageProposalProduct", b =>
                 {
-                    b.HasOne("PodiumCaseStudy.Data.Entities.MortgageProposal", null)
+                    b.HasOne("PodiumCaseStudy.Data.Entities.MortgageProposal", "MortgageProposal")
                         .WithMany("Products")
-                        .HasForeignKey("MortgageProposalId");
+                        .HasForeignKey("MortgageProposalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PodiumCaseStudy.Data.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PodiumCaseStudy.Data.Entities.MortgageRequirement", b =>
+                {
+                    b.HasOne("PodiumCaseStudy.Data.Entities.Applicant", "Applicant")
+                        .WithMany()
+                        .HasForeignKey("ApplicantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

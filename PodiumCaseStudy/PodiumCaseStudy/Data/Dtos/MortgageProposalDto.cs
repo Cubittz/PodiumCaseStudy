@@ -8,13 +8,11 @@ namespace PodiumCaseStudy.Data.Dtos
 {
     public class MortgageProposalDto
     {
-        public string Id { get; set; }
-        public IEnumerable<ProductDto> Products { get; set; }
-
-        public Guid ApplicantId { get; set; }
-        public virtual ApplicantDto Applicant { get; set; }
+        public Guid Id { get; set; }
 
         public Guid MortgageRequirementId { get; set; }
-        public virtual MortgageRequirementDto MortgageRequirement { get; set; }
+        public MortgageRequirementDto MortgageRequirement { get; set; }
+
+        public IEnumerable<MortgageProposalProductDto> Products { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace PodiumCaseStudy.Data
             CreateMap<Product, ProductDto>().ReverseMap();
             CreateMap<MortgageRequirement, MortgageRequirementDto>().ReverseMap();
             CreateMap<MortgageProposal, MortgageProposalDto>().ReverseMap();
+            CreateMap<MortgageProposalProduct, MortgageProposalProductDto>().ReverseMap();
 
         }
     }

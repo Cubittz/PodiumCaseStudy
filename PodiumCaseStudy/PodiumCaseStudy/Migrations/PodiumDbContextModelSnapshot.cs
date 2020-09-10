@@ -58,6 +58,27 @@ namespace PodiumCaseStudy.Migrations
                     b.ToTable("MortgageProposals");
                 });
 
+            modelBuilder.Entity("PodiumCaseStudy.Data.Entities.MortgageProposalProduct", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MortgageProposalId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MortgageProposalId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("MortgageProposalProduct");
+                });
+
             modelBuilder.Entity("PodiumCaseStudy.Data.Entities.MortgageRequirement", b =>
                 {
                     b.Property<Guid>("Id")
@@ -98,19 +119,14 @@ namespace PodiumCaseStudy.Migrations
                     b.Property<int>("LoanType")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("MortgageProposalId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("MortgageProposalId");
 
                     b.ToTable("Products");
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ac9d10eb-639c-44a7-b8e0-94c799824b63"),
+                            Id = new Guid("6210c659-2bba-40c5-a1ab-3ebdbdbfad1b"),
                             InterestRate = 0.02m,
                             Lender = "Bank A",
                             LoanToValue = 0.6m,
@@ -118,7 +134,7 @@ namespace PodiumCaseStudy.Migrations
                         },
                         new
                         {
-                            Id = new Guid("e3306135-c662-483a-884b-e6123ecf4697"),
+                            Id = new Guid("fb57f274-7fa7-45b0-a5c1-1b5757195664"),
                             InterestRate = 0.03m,
                             Lender = "Bank B",
                             LoanToValue = 0.6m,
@@ -126,7 +142,7 @@ namespace PodiumCaseStudy.Migrations
                         },
                         new
                         {
-                            Id = new Guid("4ebd1d33-7215-44d0-9f1b-a8f45f13c882"),
+                            Id = new Guid("9bf06b0f-b937-4c4b-81c4-d00475af4b0d"),
                             InterestRate = 0.04m,
                             Lender = "Bank C",
                             LoanToValue = 0.9m,
@@ -143,6 +159,21 @@ namespace PodiumCaseStudy.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("PodiumCaseStudy.Data.Entities.MortgageProposalProduct", b =>
+                {
+                    b.HasOne("PodiumCaseStudy.Data.Entities.MortgageProposal", "MortgageProposal")
+                        .WithMany("Products")
+                        .HasForeignKey("MortgageProposalId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PodiumCaseStudy.Data.Entities.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PodiumCaseStudy.Data.Entities.MortgageRequirement", b =>
                 {
                     b.HasOne("PodiumCaseStudy.Data.Entities.Applicant", "Applicant")
@@ -150,13 +181,6 @@ namespace PodiumCaseStudy.Migrations
                         .HasForeignKey("ApplicantId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PodiumCaseStudy.Data.Entities.Product", b =>
-                {
-                    b.HasOne("PodiumCaseStudy.Data.Entities.MortgageProposal", null)
-                        .WithMany("Products")
-                        .HasForeignKey("MortgageProposalId");
                 });
 #pragma warning restore 612, 618
         }
