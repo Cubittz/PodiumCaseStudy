@@ -28,6 +28,9 @@ namespace PodiumCaseStudy
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers().AddNewtonsoftJson();
+
+
             services.AddTransient(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddTransient<IApplicantRepository, ApplicantRepository>();
             services.AddTransient<IProductRepository, ProductRepository>();

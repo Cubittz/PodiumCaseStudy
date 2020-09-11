@@ -12,5 +12,7 @@ namespace PodiumCaseStudy.Services
         Task<Applicant> GetById(Guid id);
 
         Task<Applicant> CreateApplicant(Applicant applicant);
+
+        bool CheckApplicantAge(DateTime dateOfBirth);
     }
 }

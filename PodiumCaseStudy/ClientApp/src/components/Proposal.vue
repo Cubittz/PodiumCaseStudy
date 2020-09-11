@@ -1,6 +1,7 @@
 <template>
   <div id='results'>
-    <table class='table table-sm'>
+  <h2>Your mortgage proposal</h2>
+    <table class='table table-bordered'>
       <thead>
         <tr>
           <th scope='col'>Lender</th>
@@ -10,11 +11,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for='lender in lenders' :key='lender.id'>
-          <th scope='row'>{{lender.lender}}</th>
-          <td>{{lender.interestRate | toPercentage}}</td>
-          <td>{{lender.loanType}}</td>
-          <td>{{lender.loanToValue | toPercentage}}</td>
+        <tr v-for='proposal in lenders' :key='proposal.product.id'>
+          <th scope='row'>{{proposal.product.lender}}</th>
+          <td>{{proposal.product.interestRate | toPercentage}}</td>
+          <td>{{proposal.product.loanType}}</td>
+          <td>{{proposal.product.loanToValue | toPercentage}}</td>
         </tr>
       </tbody>
     </table>
@@ -23,7 +24,7 @@
 
 <script>
 export default {
-  name: 'lender-list',
+  name: 'proposal',
   props: ['lenders'],
   filters: {
     toPercentage(number) {

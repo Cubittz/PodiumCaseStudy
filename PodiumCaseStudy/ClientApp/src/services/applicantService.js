@@ -6,21 +6,6 @@ const headers = {
 };
 
 export default {
-
-    getUserDetail(id){
-        return axios.get(path + id)
-            .then(response => {
-                return response.data;
-            });
-    },
-
-    getUserDetails(){
-        return axios.get(path)
-            .then(response => {
-                return response.data;
-            });
-    },
-
     createApplicant(payload){
         return axios.post(path, payload, {headers: headers});
     }

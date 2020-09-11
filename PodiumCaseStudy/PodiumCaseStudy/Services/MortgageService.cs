@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http.Connections;
+using Microsoft.VisualBasic.CompilerServices;
 using PodiumCaseStudy.Data.Entities;
 using PodiumCaseStudy.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 
 namespace PodiumCaseStudy.Services
@@ -13,14 +15,18 @@ namespace PodiumCaseStudy.Services
         private readonly IMortgageProposalRepository _proposalRepository;
         private readonly IMortgageRequirementRepository _requirementRepository;
         private readonly IProductService _productService;
+        private readonly IApplicantService _applicantService;
+
 
         public MortgageService(IMortgageProposalRepository proposalRepository,
             IMortgageRequirementRepository requirementRepository,
-            IProductService productService)
+            IProductService productService,
+            IApplicantService applicantService)
         {
             _proposalRepository = proposalRepository;
             _requirementRepository = requirementRepository;
             _productService = productService;
+            _applicantService = applicantService;
         }
 
         public async Task<MortgageProposal> GetById(Guid id)
@@ -49,19 +55,36 @@ namespace PodiumCaseStudy.Services
             
             var products = await _productService.GetAll();
             var proposalProducts = new List<MortgageProposalProduct>();
-            foreach(var product in products)
+
+            var applicant = await _applicantService.GetById(requirement.ApplicantId);
+            if (!_applicantService.CheckApplicantAge(applicant.DateOfBirth))
             {
-                proposalProducts.Add(new MortgageProposalProduct
+                return proposal;
+            }
+
+            foreach (var product in products)
+            {
+                var ltv = CalculateLTV(requirement.PropertyValue, requirement.DepositAmount);
+                if (ltv <= product.LoanToValue)
                 {
-                    Id = Guid.NewGuid(),
-                    MortgageProposalId = proposal.Id,
-                    ProductId = product.Id,
-                    Product = product
-                }); ;
+                    proposalProducts.Add(new MortgageProposalProduct
+                    {
+                        Id = Guid.NewGuid(),
+                        MortgageProposalId = proposal.Id,
+                        ProductId = product.Id,
+                        Product = product
+                    }); ;
+                }
             }
 
             proposal.Products = proposalProducts;
             return proposal;
+        }
+
+        private decimal CalculateLTV(decimal propertyValue, decimal depositAmount)
+        {
+            var mortgage = propertyValue - depositAmount;
+            return mortgage / propertyValue;
         }
     }
 }

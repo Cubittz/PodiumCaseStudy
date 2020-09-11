@@ -6,8 +6,7 @@ const headers = {
 };
 
 export default {
-
-    getMatchingLoansForUser(payload){
+    getProposal(payload){
         return axios.post(path, payload, {headers: headers});
     }
 }

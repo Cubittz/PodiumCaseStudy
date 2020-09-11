@@ -7,6 +7,8 @@ namespace PodiumCaseStudy.Services
 {
     public class ApplicantService  : IApplicantService
     {
+        const int MINIMUM_AGE = 18;
+
         private readonly IApplicantRepository _repository;
         public ApplicantService(IApplicantRepository repository)
         {
@@ -23,6 +25,17 @@ namespace PodiumCaseStudy.Services
         {
             var newApplicant = await _repository.CreateAsync(applicant);
             return newApplicant;
+        }
+
+        public bool CheckApplicantAge(DateTime dateOfBirth)
+        {
+            var today = DateTime.Today;
+
+            var age = today.Year - dateOfBirth.Year;
+
+            if (dateOfBirth.Date > today.AddYears(-age)) age--;
+
+            return age >= MINIMUM_AGE;
         }
     }
 }
