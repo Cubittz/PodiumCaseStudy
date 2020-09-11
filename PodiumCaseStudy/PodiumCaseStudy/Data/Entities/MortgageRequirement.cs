@@ -13,7 +13,7 @@ namespace PodiumCaseStudy.Data.Entities
         public Guid ApplicantId { get; set; }
         public virtual Applicant Applicant { get; set; }
 
-        public int PropertyValue { get; set; }
-        public int DepositAmount { get; set; }
+        public decimal PropertyValue { get; set; }
+        public decimal DepositAmount { get; set; }
     }
 }

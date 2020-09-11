@@ -1,20 +1,19 @@
 <template>
-  <div id='app'>
+  <div id="app">
     <app-nav-bar />
-    <main role='main' class='flex-shrink-0'>
+    <main role="main" class="flex-shrink-0">
       <router-view />
     </main>
   </div>
 </template>
 
 <script>
-import NavBar from '@/components/NavBar.vue';
-
+import NavBar from "@/components/NavBar.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    'app-nav-bar': NavBar,
-  },
+    "app-nav-bar": NavBar
+  }
 };
 </script>
 
@@ -26,7 +25,6 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-
 main {
   padding-top: 100px;
 }

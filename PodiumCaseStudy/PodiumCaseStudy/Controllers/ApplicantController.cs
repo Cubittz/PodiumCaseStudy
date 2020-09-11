@@ -12,7 +12,7 @@ using PodiumCaseStudy.Services;
 namespace PodiumCaseStudy.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class ApplicantController : ControllerBase
     {
         private readonly ILogger<ApplicantController> _logger;

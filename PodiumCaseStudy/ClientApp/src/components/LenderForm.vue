@@ -109,7 +109,8 @@ export default {
     nextStep() {
       if (this.step === 1) {
         this.isLoading = true;
-        applicantService.createapplicant(JSON.stringify(this.applicant))
+        console.log(this.applicant);
+        applicantService.createApplicant(JSON.stringify(this.applicant))
           .then((response) => {
             if (this.step >= 1 && this.step < 3) this.step++;
             this.mortgageRequirement.applicantId = response.data.id;
@@ -122,9 +123,8 @@ export default {
 
       if (this.step === 2) {
         this.isLoading = true;
-        mortgageProposalService.getMatchingLoansForUser(
-          JSON.stringify(this.mortgageRequirement)
-        )
+        console.log(this.mortgageRequirement);
+        mortgageProposalService.getMatchingLoansForUser(this.mortgageRequirement)
           .then((response) => {
             this.lenders = response.data;
             this.step = 3;

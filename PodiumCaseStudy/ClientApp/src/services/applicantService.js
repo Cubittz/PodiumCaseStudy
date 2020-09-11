@@ -21,7 +21,7 @@ export default {
             });
     },
 
-    createUserDetail(payload){
+    createApplicant(payload){
         return axios.post(path, payload, {headers: headers});
     }
 }

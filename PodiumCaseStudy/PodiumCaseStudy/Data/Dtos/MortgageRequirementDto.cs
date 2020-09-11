@@ -10,7 +10,7 @@ namespace PodiumCaseStudy.Data.Dtos
     {
         public string Id { get; set; }
         public string ApplicantId { get; set; }
-        public int PropertyValue { get; set; }
-        public int DepositAmount { get; set; }
+        public decimal PropertyValue { get; set; }
+        public decimal DepositAmount { get; set; }
     }
 }
